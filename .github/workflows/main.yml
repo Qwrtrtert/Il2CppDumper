@@ -1,0 +1,34 @@
+name: Il2CppDumper Action
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make clang git
+
+      - name: Compile Il2CppDumper
+        run: |
+          git clone https://github.com/Perfare/Il2CppDumper.git
+          cd Il2CppDumper
+          make
+
+      - name: Run Il2CppDumper
+        run: |
+          ./Il2CppDumper /path/to/your/il2cpp/dump.cs
+
+          
